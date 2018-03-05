@@ -9,6 +9,7 @@ public class ScanMe {
         timebudget();
         timedifference();
         squarearea();
+        LongtudeLatitude();
     }
 
     private static void greetings() { // Call the Method
@@ -27,24 +28,26 @@ public class ScanMe {
         Scanner input = new Scanner(in);
         out.println("How many days will you spend travelling?");
         int Days = input.nextInt();
-        int Hours;
+        double Hours;
         Hours = 24;
         double DayHours;
         DayHours = Days / Hours;
+        int answerDayHrs = (int) (DayHours * 100.0);
         double HoursMinutes;
-        int Minutes = 60;
+        double Minutes = 60;
         HoursMinutes = Minutes * DayHours;
         out.println("How much money in USD, are you planning to spend on your trip?");
-        int Money = input.nextInt();
-        out.println("What is the three letter currency symbol, for your travel destinatin?");
+        int Money = (int) input.nextDouble();
+        out.println("What is the three letter currency symbol, for your travel destination?");
         String CSymbol = input.next();
         String InitialCurrency = "USD";
         out.println("How many" + " " + CSymbol + " " + "are there in" + " " + "1" + " " + InitialCurrency + "?");
         double ExchangeRate = input.nextDouble();
-        System.out.printf("If your traveling for  %d days it is the same as:%s hours %s or %s Minutes%n", Days, DayHours, InitialCurrency, HoursMinutes);
-        int ExpensesPerDay;
-        ExpensesPerDay = Money / Days;
-        System.out.println("If you going to spend" + " " + "$" + Money + " "+CSymbol+" "+ "that means you can spend up to" + " "+"$" + ExpensesPerDay + " " + CSymbol);
+        System.out.println("If your traveling for" +Days+"it is the same as:"+ answerDayHrs+"or"+ InitialCurrency + HoursMinutes);
+        double ExpensesPerDay = Money / Days;
+        int answerfromone = (int) ((int) ExpensesPerDay * 100.0);
+
+        System.out.println("If you going to spend" + " " + "$" + Money + " "+CSymbol+" "+ "that means you can spend up to" + " "+"$" + answerfromone + " " + CSymbol);
     }
 
     private static void timedifference() {
@@ -67,10 +70,39 @@ public class ScanMe {
         out.println("What is the square area of your destination country in km2 ?");
         int CSquareArea = input.nextInt();
         double valmilessquare = 2.58998811;
-        double MilesSquare = (int) (CSquareArea / valmilessquare);
-        out.println("in Miles2 that is:"+ MilesSquare);
+        int  MilesSquare = (int) (CSquareArea / valmilessquare);
+        int sum = (int) (MilesSquare * 100.0);
+        int answerfromtwo = (int) ((int) sum / 100.0);
+        out.println("in Miles2 that is:"+ sum);
         out.println("*********************************************************************");
 
     }
+    private static void LongtudeLatitude() {
+        Scanner input = new Scanner(in);
+        out.println("What is the longitude for your home?");
+        double Longtud = input.nextDouble();
+        out.println("What is the Latitude for your home?");
+        double Latud = input.nextDouble();
+        out.println("What is the longitude for your travel destination?");
+        double DestLongtud = input.nextDouble();
+        out.println("What is the latitude for your travel destination?");
+        double DestLatud = input.nextDouble();
 
+
+                System.out.print("The distance between those points is:" 
+                        + distance_Between_LatLong(Latud, Longtud, DestLatud, DestLongtud) + " km\n");
+    }
+
+    private static double distance_Between_LatLong(double latud, double longtud, double destlatud, double destLongtud) {
+        latud = Math.toRadians(latud);
+        longtud = Math.toRadians(longtud);
+        destlatud = Math.toRadians(destlatud);
+        destLongtud = Math.toRadians(destLongtud);
+
+        double earthRadius = 6371.01; //Kilometers
+        return earthRadius * Math.acos(Math.sin(latud)*Math.sin(longtud) + Math.cos(destLongtud)*Math.cos(destlatud)*Math.cos(longtud - destLongtud));
+
+    }
 }
+
+
